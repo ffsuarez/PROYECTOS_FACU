@@ -71,7 +71,8 @@ int main(void){
    digitalConfig( TEC2, INPUT );
    digitalConfig( TEC3, INPUT );
    digitalConfig( TEC4, INPUT );
-
+   /*DESDE MAPA DE PERIFERICOS GPIO0=DIO32*/
+   digitalConfig( TEC4, INPUT );
 
 
    /* Configuración de pines de salida para Leds de la CIAA-NXP */
