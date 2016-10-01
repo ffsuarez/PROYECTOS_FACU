@@ -61,7 +61,7 @@
 
 #include "main.h"         /* <= own header */
 
-//#include "sAPI.h"         /* <= sAPI header */
+#include "sAPI.h"         /* <= sAPI header */
 
 #include "funciones.h"		//incluyo
 /*==================[macros and definitions]=================================*/
@@ -99,7 +99,13 @@ int main(void)
 	while(1) {
 		maquina_estado();
 	}
+
+
+	/* NO DEBE LLEGAR NUNCA AQUI, debido a que a este
+	   programa no es llamado por ningun S.O. */
+	return 0 ;
 }
+
 void inicializar(){
 	/* ------------- INICIALIZACIONES ------------- */
 	/* Inicializar la placa */
@@ -126,10 +132,8 @@ void inicializar(){
 
 
 }
-	/* NO DEBE LLEGAR NUNCA AQUI, debido a que a este
-	   programa no es llamado por ningun S.O. */
-	return 0 ;
-}
+
+
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
