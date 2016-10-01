@@ -1,7 +1,7 @@
 /* Copyright 2016, Eric Pernia.
  * All rights reserved.
  *
- * This file is part sAPI library for microcontrollers.
+ * This file is part of CIAA Firmware.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,16 +31,39 @@
  *
  */
 
+/** \brief Main example source file
+ **
+ ** This is a mini example of the CIAA Firmware.
+ **
+ **/
+
+/** \addtogroup CIAA_Firmware CIAA Firmware
+ ** @{ */
+/** \addtogroup Examples CIAA Firmware Examples
+ ** @{ */
+/** \addtogroup Main example source file
+ ** @{ */
+
 /*
- * Date: 2016-04-26
+ * Initials     Name
+ * ---------------------------
+ * ENP          Eric Pernia
+ *
+ */
+
+/*
+ * modification history (new versions first)
+ * -----------------------------------------------------------
+ * 2016-04-26   v0.0.1   First version
  */
 
 /*==================[inclusions]=============================================*/
 
 #include "main.h"         /* <= own header */
 
-#include "sAPI.h"         /* <= sAPI header */
+//#include "sAPI.h"         /* <= sAPI header */
 
+#include "funciones.h"		//incluyo
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -55,101 +78,60 @@
 
 /*==================[external functions definition]==========================*/
 
-/* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
-int main(void){
+/** \brief Main function
+ *
+ * This is the main entry point of the software.
+ *
+ * \returns 0
+ *
+ * \remarks This function never returns. Return value is only to avoid compiler
+ *          warnings or errors.
+ */
 
-   /* ------------- INICIALIZACIONES ------------- */
-
-   /* Inicializar la placa */
-   boardConfig();
-
-   /* Inicializar DigitalIO */
-   digitalConfig( 0, ENABLE_DIGITAL_IO );
-
-   /* Configuración de pines de entrada para Teclas de la CIAA-NXP */
-   digitalConfig( TEC1, INPUT );
-   digitalConfig( TEC2, INPUT );
-   digitalConfig( TEC3, INPUT );
-   digitalConfig( TEC4, INPUT );
-   /*DESDE MAPA DE PERIFERICOS GPIO0=DIO32*/
-   digitalConfig( TEC4, INPUT );
-
-
-   /* Configuración de pines de salida para Leds de la CIAA-NXP */
-   digitalConfig( LEDR, OUTPUT );
-   digitalConfig( LEDG, OUTPUT );
-   digitalConfig( LEDB, OUTPUT );
-   digitalConfig( LED1, OUTPUT );
-   digitalConfig( LED2, OUTPUT );
-   digitalConfig( LED3, OUTPUT );
-
-   digitalConfig( DIO15, OUTPUT );
-
+ /* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
+int main(void)
+{
    /* Variable para almacenar el valor de tecla leido */
-   bool_t valor;
+   bool_t valor;  //la dejo por las dudas..no creo que sirva
 
+   void inicializar();
    /* ------------- REPETIR POR SIEMPRE ------------- */
-   while(1) {
-	   int caso;
-     /* valor = !digitalRead( TEC1 );
-      digitalWrite( LEDB, valor );
+	while(1) {
+		maquina_estado();
+	}
+}
+void inicializar(){
+	/* ------------- INICIALIZACIONES ------------- */
+	/* Inicializar la placa */
+	boardConfig();
+	/* Inicializar DigitalIO */
+	digitalConfig( 0, ENABLE_DIGITAL_IO);
 
-      valor = !digitalRead( TEC2 );
-      digitalWrite( LED1, valor );
+	/* Configuración de pines de entrada para
+	   Teclas de la CIAA-NXP */
+	digitalConfig( TEC1, INPUT );
+	digitalConfig( TEC2, INPUT );
+	digitalConfig( TEC3, INPUT );
+	digitalConfig( TEC4, INPUT );
+	/* DESDE MAPA DE PERIFERICOS   GPIO0 = DIO32*/
+	digitalConfig( DIO32, INPUT_PULLUP ); //PARA CONECTAR CON PULLUP..segun facu es mas interesante
+	/* Configuración de pines de salida para
+	   Leds de la CIAA-NXP */
+	digitalConfig( LEDR, OUTPUT );
+	digitalConfig( LEDG, OUTPUT );
+	digitalConfig( LEDB, OUTPUT );
+	digitalConfig( LED1, OUTPUT );
+	digitalConfig( LED2, OUTPUT );
+	digitalConfig( LED3, OUTPUT );
 
-      valor = !digitalRead( TEC3 );
-      digitalWrite( LED2, valor );
 
-      valor = !digitalRead( TEC4 );
-      digitalWrite( LED3, valor );
-
-      valor = !digitalRead( DIO14 );
-      digitalWrite( DIO15, valor );*/
-	   if (digitalRead(TEC1)==ON){
-		   caso=1;
-	   }
-	   if (digitalRead(TEC2)==ON){
-	   		   caso=2;
-	   }
-	   if (digitalRead(TEC3)==ON){
-	   		   caso=3;
-	   }
-	   if (digitalRead(TEC4)==ON){
-	   		   caso=4;
-	   }
-	   switch(caso){
-
-	   case 1:
-
-		   digitalWrite(LED1,ON);
-		   delay(100);
-		   break;
-
-	   case 2:
-
-		   digitalWrite(LED2,ON);
-		   delay(100);
-		   break;
-
-	   case 3:
-
-		   digitalWrite(LED3,ON);
-		   delay(100);
-		   break;
-
-	   case 4:
-
-		   digitalWrite(LEDG,ON);
-		   delay(100);
-		   break;
-
-	   }
-
-   }
-
-   /* NO DEBE LLEGAR NUNCA AQUI, debido a que a este programa no es llamado
-      por ningun S.O. */
+}
+	/* NO DEBE LLEGAR NUNCA AQUI, debido a que a este
+	   programa no es llamado por ningun S.O. */
 	return 0 ;
 }
 
+/** @} doxygen end group definition */
+/** @} doxygen end group definition */
+/** @} doxygen end group definition */
 /*==================[end of file]============================================*/
