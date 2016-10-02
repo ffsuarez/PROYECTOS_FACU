@@ -37,32 +37,32 @@ void maquina_estado()
 			case ROJO:
 				if(PRESS())
 				{
-					LED_1();
-					estado = LED1;
+					P_LED_1();
+					estado = LED_1;
 				}
 				break;
 			
-			case LED1:
+			case LED_1:
 			
 				if(PRESS())
 				{
-					LED_2();
-					estado = LED2;
+					P_LED_2();
+					estado = LED_2;
 				}
 
 				break;
 			
-			case LED2:
+			case LED_2:
 			
 				if(PRESS())
 				{
-					LED_3();
-					estado = LED3;
+					P_LED_3();
+					estado = LED_3;
 				}
 
 				break;
 			
-			case LED3:
+			case LED_3:
 			
 				if(PRESS_7())
 				{
@@ -102,10 +102,13 @@ void maquina_estado()
 int PRESS(void)
 {
 	int res = 0 ;
+	//int i=0;
 	//Codigo propio de la funcion
-	if(digitalRead(DIO32)==OFF){
+	if(digitalRead(TEC1)==OFF){
 		res=1;
 		cont++;  //incremento contador
+		while(digitalRead(TEC1)==OFF){
+		}
 	}
 	return res;
 }
@@ -120,7 +123,14 @@ int PRESS(void)
 int PRESS_4(void)
 {
 	int res = 0 ;
+	//int i=0;
 	//Codigo propio de la funcion
+	if(digitalRead(TEC1)==OFF){
+			//res=1;
+			cont++;  //incremento contador
+			while(digitalRead(TEC1)==OFF){
+			}
+	}
 	if(cont==4){
 		res=1;
 	}
@@ -137,7 +147,14 @@ int PRESS_4(void)
 int PRESS_7(void)
 {
 	int res = 0 ;
+	//int i=0;
 	//Codigo propio de la funcion
+	if(digitalRead(TEC1)==OFF){
+			//res=1;
+			cont++;  //incremento contador
+			while(digitalRead(TEC1)==OFF){
+					}
+	}
 	if (cont==7){
 		res=1;
 	}
@@ -154,7 +171,14 @@ int PRESS_7(void)
 int PRESS_10(void)
 {
 	int res = 0 ;
+	//int i=0;
 	//Codigo propio de la funcion
+	if(digitalRead(TEC1)==OFF){
+			//res=1;
+			cont++;  //incremento contador
+			while(digitalRead(TEC1)==OFF){
+					}
+	}
 	if(cont==10){
 		res=1;
 	}
@@ -175,6 +199,8 @@ void LED_R(void)
 {
 	//Codigo propio de la funcion
 	digitalWrite(LEDR,ON);
+	digitalWrite(LEDB,OFF);
+	digitalWrite(LEDG,OFF);
 	digitalWrite(LED1,OFF);
 	digitalWrite(LED2,OFF);
 	digitalWrite(LED3,OFF);
@@ -187,10 +213,12 @@ void LED_R(void)
 *	\author FACUNDO
 *	\date 29-09-2016 20:56:05
 */
-void LED1(void)
+void P_LED_1(void)
 {
 	//Codigo propio de la funcion
 	digitalWrite(LEDR,OFF);
+	digitalWrite(LEDB,OFF);
+	digitalWrite(LEDG,OFF);
 	digitalWrite(LED1,ON);
 	digitalWrite(LED2,OFF);
 	digitalWrite(LED3,OFF);
@@ -203,10 +231,12 @@ void LED1(void)
 *	\author FACUNDO
 *	\date 29-09-2016 20:56:05
 */
-void LED2(void)
+void P_LED_2(void)
 {
 	//Codigo propio de la funcion
 	digitalWrite(LEDR,OFF);
+	digitalWrite(LEDB,OFF);
+	digitalWrite(LEDG,OFF);
 	digitalWrite(LED1,OFF);
 	digitalWrite(LED2,ON);
 	digitalWrite(LED3,OFF);
@@ -219,10 +249,12 @@ void LED2(void)
 *	\author FACUNDO
 *	\date 29-09-2016 20:56:05
 */
-void LED3(void)
+void P_LED_3(void)
 {
 	//Codigo propio de la funcion
 	digitalWrite(LEDR,OFF);
+	digitalWrite(LEDB,OFF);
+	digitalWrite(LEDG,OFF);
 	digitalWrite(LED1,OFF);
 	digitalWrite(LED2,OFF);
 	digitalWrite(LED3,ON);
@@ -239,6 +271,8 @@ void LED_G(void)
 {
 	//Codigo propio de la funcion
 	digitalWrite(LEDG,ON);
+	digitalWrite(LEDR,OFF);
+	digitalWrite(LEDB,OFF);
 	digitalWrite(LED1,OFF);
 	digitalWrite(LED2,OFF);
 	digitalWrite(LED3,OFF);
@@ -255,6 +289,8 @@ void LED_B(void)
 {
 	//Codigo propio de la funcion
 	digitalWrite(LEDB,ON);
+	digitalWrite(LEDR,OFF);
+	digitalWrite(LEDG,OFF);
 	digitalWrite(LED1,OFF);
 	digitalWrite(LED2,OFF);
 	digitalWrite(LED3,OFF);
