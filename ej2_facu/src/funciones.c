@@ -74,13 +74,13 @@ void maquina_estado()
 					LED_B();
 					estado = ROJO;
 				}
-				if(PRESS_10())
+				/*if(PRESS_10())
 				{
-					LED_R();
+					P_LED_1();
 					BORROW();
-					estado = ROJO;
+					estado = INICIAL;
 		
-				}
+				}*/
 
 				break;
 			
@@ -125,14 +125,8 @@ int PRESS_4(void)
 	int res = 0 ;
 	//int i=0;
 	//Codigo propio de la funcion
-	if(digitalRead(TEC1)==OFF){
-			//res=1;
-			cont++;  //incremento contador
-			while(digitalRead(TEC1)==OFF){
-			}
-	}
 	if(cont==4){
-		res=1;
+			res=1;
 	}
 	return res;
 }
@@ -149,15 +143,10 @@ int PRESS_7(void)
 	int res = 0 ;
 	//int i=0;
 	//Codigo propio de la funcion
-	if(digitalRead(TEC1)==OFF){
-			//res=1;
-			cont++;  //incremento contador
-			while(digitalRead(TEC1)==OFF){
-					}
-	}
 	if (cont==7){
-		res=1;
+			res=1;
 	}
+
 	return res;
 }
 
@@ -178,10 +167,11 @@ int PRESS_10(void)
 			cont++;  //incremento contador
 			while(digitalRead(TEC1)==OFF){
 					}
+			if(cont==9){
+					res=1;
+				}
 	}
-	if(cont==10){
-		res=1;
-	}
+
 	return res;
 
 }

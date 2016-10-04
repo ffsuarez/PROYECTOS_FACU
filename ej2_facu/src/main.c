@@ -117,7 +117,7 @@ int main(void)
    	digitalConfig( LED1, OUTPUT );
    	digitalConfig( LED2, OUTPUT );
    	digitalConfig( LED3, OUTPUT );
-
+   	cont=0;
    /* ------------- REPETIR POR SIEMPRE ------------- */
 	while(1) {
 		maquina_estado();
