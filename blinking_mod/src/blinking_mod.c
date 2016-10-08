@@ -72,7 +72,7 @@
 #include "ciaaPOSIX_string.h" /* <= string header */
 #include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_mod.h"         /* <= own header */
-
+#include "sAPI.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -170,17 +170,29 @@ TASK(InitTask)
  */
 TASK(PeriodicTask)
 {
-   uint8_t outputs;
+   /*uint8_t outputs;
 
    /* write blinking message */
-   ciaaPOSIX_printf("Blinking\n");
+   //ciaaPOSIX_printf("Blinking\n");
 
    /* blink output */
-   ciaaPOSIX_read(fd_out, &outputs, 1);
+   /*ciaaPOSIX_read(fd_out, &outputs, 1);
    outputs ^= 0x20;
    ciaaPOSIX_write(fd_out, &outputs, 1);
 
    /* terminate task */
+
+    /* Prendo el led azul */
+    digitalWrite( LEDB, ON );
+
+    delay(500);
+
+    /* Apago el led azul */
+    digitalWrite( LEDB, OFF );
+
+    delay(500);
+
+
    TerminateTask();
 }
 

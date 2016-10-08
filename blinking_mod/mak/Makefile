@@ -41,8 +41,10 @@ PROJECT_NAME               = $(lastword $(subst $(DS), , $(PROJECT_PATH)))
 $(PROJECT_NAME)_SRC_PATH  += $(PROJECT_PATH)$(DS)src
 # include path
 INC_FILES            += $(PROJECT_PATH)$(DS)inc
+INC_FILES            += modules$(DS)sapi_bm$(DS)inc
 # library source files
 SRC_FILES            += $(wildcard $($(PROJECT_NAME)_SRC_PATH)$(DS)*.c)
+#SRC_FILES            += $(wildcard $modules$(DS)sapi_bm$(DS)src$(DS)*.c)
 # configuration for OSEK-OS
 #OIL_FILES            += $(PROJECT_PATH)$(DS)etc$(DS)$(PROJECT_NAME).oil
 OIL_FILES            += $(PROJECT_PATH)$(DS)etc$(DS)$(PROJECT_NAME).oil
