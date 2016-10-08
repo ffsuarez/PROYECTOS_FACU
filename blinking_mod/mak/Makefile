@@ -41,7 +41,11 @@ PROJECT_NAME               = $(lastword $(subst $(DS), , $(PROJECT_PATH)))
 $(PROJECT_NAME)_SRC_PATH  += $(PROJECT_PATH)$(DS)src
 # include path
 INC_FILES            += $(PROJECT_PATH)$(DS)inc
-INC_FILES            += modules$(DS)sapi_bm$(DS)inc
+INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_Board.h
+INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_Datatypes.h
+INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_DigitalIO.h
+INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_PeripheralMap.h
+INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI.h
 # library source files
 SRC_FILES            += $(wildcard $($(PROJECT_NAME)_SRC_PATH)$(DS)*.c)
 #SRC_FILES            += $(wildcard $modules$(DS)sapi_bm$(DS)src$(DS)*.c)

@@ -68,11 +68,11 @@
 
 /*==================[inclusions]=============================================*/
 #include "os.h"               /* <= operating system header */
-#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
-#include "ciaaPOSIX_string.h" /* <= string header */
+//#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
+//#include "ciaaPOSIX_string.h" /* <= string header */
 #include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_mod.h"         /* <= own header */
-#include "sAPI.h"
+//#include "sAPI.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
