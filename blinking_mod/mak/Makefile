@@ -48,7 +48,11 @@ INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_PeripheralMap.h
 INC_FILES            += modules$(DS)sapi_bm$(DS)inc$(DS)sAPI.h
 # library source files
 SRC_FILES            += $(wildcard $($(PROJECT_NAME)_SRC_PATH)$(DS)*.c)
-#SRC_FILES            += $(wildcard $modules$(DS)sapi_bm$(DS)src$(DS)*.c)
+SRC_FILES            += $(wildcard $modules$(DS)sapi_bm$(DS)src$(DS)sAPI_Board.c)
+SRC_FILES            += $(wildcard $modules$(DS)sapi_bm$(DS)src$(DS)sAPI_Datatypes.c)
+SRC_FILES            += $(wildcard $modules$(DS)sapi_bm$(DS)src$(DS)sAPI_DigitalIO.c)
+
+
 # configuration for OSEK-OS
 #OIL_FILES            += $(PROJECT_PATH)$(DS)etc$(DS)$(PROJECT_NAME).oil
 OIL_FILES            += $(PROJECT_PATH)$(DS)etc$(DS)$(PROJECT_NAME).oil
