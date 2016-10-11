@@ -69,10 +69,16 @@
 /*==================[inclusions]=============================================*/
 #include "os.h"               /* <= operating system header */
 #include "ciaaPOSIX_stdio.h"  /* <= device handler header */
-//#include "ciaaPOSIX_string.h" /* <= string header */
+#include "ciaaPOSIX_string.h" /* <= string header */
 #include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_mod.h"         /* <= own header */
-//#include "sAPI.h"
+//#include "chip.h"
+//#include "stdint.h"
+#include "sAPI_DataTypes.h"
+#include "sAPI_PeripheralMap.h"
+#include "sAPI.h"
+#include "sAPI_Board.h"
+#include "sAPI_DigitalIO.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -181,14 +187,14 @@ TASK(PeriodicTask)
    ciaaPOSIX_write(fd_out, &outputs, 1);
 
    /* terminate task */
-
+	digitalConfig(LED2,ENABLE_DIGITAL_IO );
     /* Prendo el led azul */
-    digitalWrite( LEDB, ON );
+    digitalWrite( LED2 , ON );
 
     delay(500);
 
     /* Apago el led azul */
-    digitalWrite( LEDB, OFF );
+    digitalWrite( LED2, OFF );
 
     delay(500);
 
