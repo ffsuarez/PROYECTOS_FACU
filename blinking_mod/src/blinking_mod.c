@@ -105,17 +105,17 @@ int main(void)
 {
    /* Starts the operating system in the Application Mode 1 */
    /* This example has only one Application Mode */
-
-	StartOS(AppMode1);
 	Chip_GPIO_Init(LPC_GPIO_PORT);
-	Chip_SCU_PinMux(
-	            2,
-	            10,
-	            SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
-	            SCU_MODE_FUNC0
-	         );
-	Chip_GPIO_SetDir( LPC_GPIO_PORT, 0, ( 1 << 14 ), 1 );
-	Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, 0);
+		Chip_SCU_PinMux(
+		            2,
+		            10,
+		            SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
+		            SCU_MODE_FUNC0
+		         );
+		Chip_GPIO_SetDir( LPC_GPIO_PORT, 0, ( 1 << 14 ), 1 );
+		Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, 0);
+	StartOS(AppMode1);
+
    /* StartOs shall never returns, but to avoid compiler warnings or errors
     * 0 is returned */
    return 0;
@@ -177,7 +177,7 @@ TASK(InitTask)
  * ActivatePeriodicTask expires.
  *
  */
-TASK(PeriodicTask)
+TASK(PeriodicTask2)
 {
    if(Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, 0, 14 )==TRUE){
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
