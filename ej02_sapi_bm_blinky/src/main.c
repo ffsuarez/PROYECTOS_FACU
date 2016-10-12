@@ -39,7 +39,7 @@
 
 #include "main.h"         /* <= own header */
 
-#include "sAPI.h"         /* <= sAPI header */
+//#include "sAPI.h"         /* <= sAPI header */
 
 /*==================[macros and definitions]=================================*/
 
