@@ -218,6 +218,16 @@ TASK(Analogic)
    }
 
    /* end of Blinking */
+	uint8_t lpcAdcChannel = 66 - A0; //modificado para tomar desde A0
+	uint16_t analogValue = 0;
+
+	Chip_ADC_EnableChannel(LPC_ADC0, lpcAdcChannel, ENABLE);
+	Chip_ADC_SetStartMode(LPC_ADC0, ADC_START_NOW, ADC_TRIGGERMODE_RISING);
+	while( (Chip_ADC_ReadStatus(LPC_ADC0, lpcAdcChannel, ADC_DR_DONE_STAT) != SET) );
+
+	Chip_ADC_ReadValue( LPC_ADC0, lpcAdcChannel, &analogValue );
+
+	Chip_ADC_EnableChannel( LPC_ADC0, lpcAdcChannel, DISABLE );
 
    TerminateTask();
 }
