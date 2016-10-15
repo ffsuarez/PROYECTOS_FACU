@@ -66,7 +66,7 @@ TASK InitTask {
     RESOURCE = POSIXR;
 }
 
-TASK Analogic {
+TASK Analogic2 {
     PRIORITY = 1;
     ACTIVATION = 1;
     STACK = 512;
@@ -76,10 +76,10 @@ TASK Analogic {
     EVENT = POSIXE;
 }
 
-ALARM AnalogicAlarm {
+ALARM Analogic2Alarm {
     COUNTER = SoftwareCounter;
     ACTION = ACTIVATETASK {
-        TASK = Analogic;
+        TASK = Analogic2;
     }
     AUTOSTART = TRUE {
        APPMODE = AppMode1;

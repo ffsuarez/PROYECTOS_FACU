@@ -70,8 +70,12 @@
 #include "ciaaPOSIX_stdio.h"
 #include "ciaaPOSIX_stdlib.h"
 #include "ciaak.h"            /* <= ciaa kernel header */
-#include "adc_dac.h"
-
+#include "adc_dac_mod.h"
+#include "chip.h"
+//#include "chip_lpc18xx.h"
+//#include "chip_lpc43xx.h"
+//#include "adc_18xx_43xx.h"
+//#include "sAPI_AnalogIO.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -84,13 +88,13 @@
  *
  * Device path /dev/serial/aio/in/0
  */
-static int32_t fd_adc;
+//static int32_t fd_adc;
 
 /** \brief File descriptor for DAC
  *
  * Device path /dev/serial/aio/out/0
  */
-static int32_t fd_dac;
+//static int32_t fd_dac;
 
 
 /*==================[external data definition]===============================*/
@@ -195,7 +199,7 @@ TASK(InitTask)
  * This task is activated every 1ms by the AnalogicAlarm configured in
  * adc_dac.oil
  */
-TASK(Analogic)
+TASK(Analogic2)
 {
    /*int32_t count;
    uint16_t hr_ciaaDac[128];
@@ -218,7 +222,7 @@ TASK(Analogic)
    }
 
    /* end of Blinking */
-	uint8_t lpcAdcChannel = 66 - A0; //modificado para tomar desde A0
+	uint8_t lpcAdcChannel = 66 ; //modificado para tomar desde A0
 	uint16_t analogValue = 0;
 
 	Chip_ADC_EnableChannel(LPC_ADC0, lpcAdcChannel, ENABLE);
@@ -228,6 +232,8 @@ TASK(Analogic)
 	Chip_ADC_ReadValue( LPC_ADC0, lpcAdcChannel, &analogValue );
 
 	Chip_ADC_EnableChannel( LPC_ADC0, lpcAdcChannel, DISABLE );
+
+	//ciaaPOSIX_printf(&analogValue);
 
    TerminateTask();
 }
