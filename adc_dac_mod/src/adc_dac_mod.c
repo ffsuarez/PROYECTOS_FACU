@@ -115,7 +115,31 @@ int main(void)
 {
    /* Starts the operating system in the Application Mode 1 */
    /* This example has only one Application Mode */
-   StartOS(AppMode1);
+					   //ENABLE IMPUTS
+	ADC_CLOCK_SETUP_T ADCSetup;
+	/* Initialized to default values:
+	*   - Sample rate:ADC_MAX_SAMPLE_RATE=400KHz
+	*   - resolution: ADC_10BITS
+	*   - burst mode: DISABLE */
+	Chip_ADC_Init( LPC_ADC0, &ADCSetup );
+	/* Disable burst mode */
+	Chip_ADC_SetBurstCmd( LPC_ADC0, DISABLE );
+	/* Set sample rate to 200KHz */
+	Chip_ADC_SetSampleRate( LPC_ADC0, &ADCSetup, ADC_MAX_SAMPLE_RATE/2 );
+	/* Disable all channels */
+	Chip_ADC_EnableChannel( LPC_ADC0,ADC_CH1, DISABLE );
+	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH1, DISABLE );
+
+	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH2, DISABLE );
+	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH2, DISABLE );
+
+	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH3, DISABLE );
+	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH3, DISABLE );
+
+	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH4, DISABLE );
+	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH4, DISABLE );
+
+	StartOS(AppMode1);
 
    /* StartOs shall never returns, but to avoid compiler warnings or errors
     * 0 is returned */
@@ -166,30 +190,6 @@ TASK(InitTask)
    ciaaPOSIX_ioctl(fd_dac, ciaaPOSIX_IOCTL_SET_SAMPLE_RATE, 100000);
 
    /* end InitTask */
-   	   	   	   	   	   	   	   	   //ENABLE IMPUTS
-   ADC_CLOCK_SETUP_T ADCSetup;
-   /* Initialized to default values:
-   		   *   - Sample rate:ADC_MAX_SAMPLE_RATE=400KHz
-   		   *   - resolution: ADC_10BITS
-   		   *   - burst mode: DISABLE */
-	Chip_ADC_Init( LPC_ADC0, &ADCSetup );
-	/* Disable burst mode */
-	Chip_ADC_SetBurstCmd( LPC_ADC0, DISABLE );
-	/* Set sample rate to 200KHz */
-	Chip_ADC_SetSampleRate( LPC_ADC0, &ADCSetup, ADC_MAX_SAMPLE_RATE/2 );
-	/* Disable all channels */
-	Chip_ADC_EnableChannel( LPC_ADC0,ADC_CH1, DISABLE );
-	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH1, DISABLE );
-
-	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH2, DISABLE );
-	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH2, DISABLE );
-
-	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH3, DISABLE );
-	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH3, DISABLE );
-
-	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH4, DISABLE );
-	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH4, DISABLE );
-
 
    TerminateTask();
 }
