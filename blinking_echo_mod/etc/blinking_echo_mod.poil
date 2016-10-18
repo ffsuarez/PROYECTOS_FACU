@@ -55,31 +55,31 @@ OS	ExampleOS {
     MEMMAP = FALSE;
 };
 
-TASK InitTask {
-    PRIORITY = 1;
-    ACTIVATION = 1;
+TASK InitTask {  
+    PRIORITY = 1;					
+    ACTIVATION = 1;					
     AUTOSTART = TRUE {
         APPMODE = AppMode1;
     }
-    STACK = 512;
-    TYPE = BASIC;
+    STACK = 512;					
+    TYPE = BASIC;					
     SCHEDULE = NON;
     RESOURCE = POSIXR;
     EVENT = POSIXE;
 }
 
-TASK SerialEchoTask {
-    PRIORITY = 5;
-    ACTIVATION = 1;
+TASK SerialEchoTask {   /*recepcion y transmision*/
+    PRIORITY = 5;				
+    ACTIVATION = 1;				
     STACK = 512;
-    TYPE = EXTENDED;
+    TYPE = EXTENDED;			
     SCHEDULE = FULL;
-    EVENT = POSIXE;
-    RESOURCE = POSIXR;
+    EVENT = POSIXE;				
+    RESOURCE = POSIXR;			
 }
 
-TASK PeriodicTask {
-    PRIORITY = 10;
+TASK Blinkeo {  
+    PRIORITY = 10;				
     ACTIVATION = 1;
     STACK = 512;
     TYPE = EXTENDED;
@@ -91,16 +91,16 @@ TASK PeriodicTask {
     }
 }
 
-ALARM ActivatePeriodicTask {
+ALARM ActivateBlinkeo {  
     COUNTER = SoftwareCounter;
     ACTION = ACTIVATETASK {
-        TASK = PeriodicTask;
+        TASK = Blinkeo;
     }
 }
 
-RESOURCE = POSIXR;
+RESOURCE = POSIXR;  
 
-EVENT = POSIXE;
+EVENT = POSIXE;		
 
 APPMODE = AppMode1;
 
@@ -131,23 +131,23 @@ ALARM IncrementSWCounter {
    };
 };
 
-ISR UART0_IRQHandler {
+ISR UART0_IRQHandler {  
    INTERRUPT = UART0;
    CATEGORY = 2;
    PRIORITY = 0;
 };
 
-ISR UART2_IRQHandler {
+ISR UART2_IRQHandler {		
 #if BOARD == ciaa_fsl
    INTERRUPT = UART5;
 #else
-   INTERRUPT = UART2;
+   INTERRUPT = UART2;		
 #endif
    CATEGORY = 2;
    PRIORITY = 0;
 };
 
-ISR UART3_IRQHandler {
+ISR UART3_IRQHandler {		
 #if BOARD == ciaa_fsl
    INTERRUPT = UART2;
 #else

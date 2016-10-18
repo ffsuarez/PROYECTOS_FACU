@@ -71,8 +71,8 @@
 #include "ciaaPOSIX_stdio.h"  /* <= device handler header */
 #include "ciaaPOSIX_string.h" /* <= string header */
 #include "ciaak.h"            /* <= ciaa kernel header */
-#include "blinking_echo_mod.h"         /* <= own header */
-#include "chip.h"
+#include "blinking_echo.h"         /* <= own header */
+
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -123,30 +123,6 @@ static uint32_t Periodic_Task_Counter;
  * \remarks This function never returns. Return value is only to avoid compiler
  *          warnings or errors.
  */
-
-
-
-uint8_t leerUART(void){
-	uint8_t receivedByte = 0;
-	if (Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_RDR){
-		receivedByte = Chip_UART_ReadByte(LPC_USART2);
-	}
-	return receivedByte;
-}
-
-
-
-
-void UART2_IRQHandler(void){
-	uint8_t byte;
-	byte=leerUART();
-	while ((Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_THRE) == 0); /* Wait for space in FIFO */
-	   Chip_UART_SendByte(LPC_USART2, byte);
-}
-
-
-
-
 int main(void)
 {
    /* Starts the operating system in the Application Mode 1 */
@@ -194,47 +170,26 @@ TASK(InitTask)
 
    ciaaPOSIX_printf("Init Task...\n");
    /* open CIAA digital inputs */
-   	   	   	   fd_in = ciaaPOSIX_open("/dev/dio/in/0", ciaaPOSIX_O_RDONLY);
+   fd_in = ciaaPOSIX_open("/dev/dio/in/0", ciaaPOSIX_O_RDONLY);
 
-
-
-   /*Chip_GPIO_Init(LPC_GPIO_PORT);
-	Chip_SCU_PinMux(
-				2,
-				10,
-				SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
-				SCU_MODE_FUNC0
-			 );
-	Chip_GPIO_SetDir( LPC_GPIO_PORT, 0, ( 1 << 14 ), 1 );
-	Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, 0);/*
-
-
-
-	/* open CIAA digital outputs */
-				fd_out = ciaaPOSIX_open("/dev/dio/out/0", ciaaPOSIX_O_RDWR);
+   /* open CIAA digital outputs */
+   fd_out = ciaaPOSIX_open("/dev/dio/out/0", ciaaPOSIX_O_RDWR);
 
    /* open UART connected to USB bridge (FT2232) */
-				//fd_uart1 = ciaaPOSIX_open("/dev/serial/uart/1", ciaaPOSIX_O_RDWR);
-
-	Chip_UART_Init(LPC_USART2);
-	Chip_UART_SetBaud(LPC_USART2, 9600);  /* Set Baud rate */
-	Chip_UART_SetupFIFOS(LPC_USART2, UART_FCR_FIFO_EN | UART_FCR_TRG_LEV0); /* Modify FCR (FIFO Control Register)*/
-	Chip_UART_TXEnable(LPC_USART2); /* Enable UART Transmission */
-	Chip_SCU_PinMux(7, 1, MD_PDN, FUNC6);              /* P7_1,FUNC6: UART2_TXD */
-	Chip_SCU_PinMux(7, 2, MD_PLN|MD_EZI|MD_ZI, FUNC6); /* P7_2,FUNC6: UART2_RXD */
+   fd_uart1 = ciaaPOSIX_open("/dev/serial/uart/1", ciaaPOSIX_O_RDWR);
 
    /* open UART connected to RS232 connector */
-				//fd_uart2 = ciaaPOSIX_open("/dev/serial/uart/2", ciaaPOSIX_O_RDWR);
+   fd_uart2 = ciaaPOSIX_open("/dev/serial/uart/2", ciaaPOSIX_O_RDWR);
 
    /* change baud rate for uart usb */
-				//ciaaPOSIX_ioctl(fd_uart1, ciaaPOSIX_IOCTL_SET_BAUDRATE, (void *)ciaaBAUDRATE_115200);
+   ciaaPOSIX_ioctl(fd_uart1, ciaaPOSIX_IOCTL_SET_BAUDRATE, (void *)ciaaBAUDRATE_115200);
 
    /* change FIFO TRIGGER LEVEL for uart usb */
-				//ciaaPOSIX_ioctl(fd_uart1, ciaaPOSIX_IOCTL_SET_FIFO_TRIGGER_LEVEL, (void *)ciaaFIFO_TRIGGER_LEVEL3);
+   ciaaPOSIX_ioctl(fd_uart1, ciaaPOSIX_IOCTL_SET_FIFO_TRIGGER_LEVEL, (void *)ciaaFIFO_TRIGGER_LEVEL3);
 
    /* activate example tasks */
    Periodic_Task_Counter = 0;
-   SetRelAlarm(ActivateBlinkeo, 200, 200);
+   SetRelAlarm(ActivatePeriodicTask, 200, 200);
 
    /* Activates the SerialEchoTask task */
    ActivateTask(SerialEchoTask);
@@ -263,30 +218,21 @@ TASK(SerialEchoTask)
    while(1)
    {
       /* wait for any character ... */
-	   	   //ret = ciaaPOSIX_read(fd_uart1, buf, 20);
+      ret = ciaaPOSIX_read(fd_uart1, buf, 20);
 
-      //if(ret > 0)
-      //{
+      if(ret > 0)
+      {
          /* ... and write them to the same device */
-         //ciaaPOSIX_write(fd_uart1, buf, ret);
+         ciaaPOSIX_write(fd_uart1, buf, ret);
 
          /* also write them to the other device */
-         //ciaaPOSIX_write(fd_uart2, buf, ret);
-      //}
+         ciaaPOSIX_write(fd_uart2, buf, ret);
+      }
 
       /* blink output 5 with each loop */
-	   uint8_t dato=1;
-	  dato=leerUART();
-	  if(dato=='0'){
-		  if(Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, 0, 14 )==TRUE){
-		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
-		  }
-		  else{
-		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
-		  }
-	  }
-
-
+      ciaaPOSIX_read(fd_out, &outputs, 1);
+      outputs ^= 0x20;
+      ciaaPOSIX_write(fd_out, &outputs, 1);
    }
 }
 
@@ -296,7 +242,7 @@ TASK(SerialEchoTask)
  * This task copies the status of the inputs bits 0..3 to the output bits 0..3.
  * This task also blinks the output 4
  */
-TASK(Blinkeo)
+TASK(PeriodicTask)
 {
    /*
     * Example:
