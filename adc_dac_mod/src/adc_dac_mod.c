@@ -127,8 +127,8 @@ int main(void)
 	/* Set sample rate to 200KHz */
 	Chip_ADC_SetSampleRate( LPC_ADC0, &ADCSetup, ADC_MAX_SAMPLE_RATE/2 );
 	/* Disable all channels */
-	Chip_ADC_EnableChannel( LPC_ADC0,ADC_CH1, DISABLE );
-	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH1, DISABLE );
+	Chip_ADC_EnableChannel( LPC_ADC0,ADC_CH1, ENABLE );
+	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH1, ENABLE );
 
 	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH2, DISABLE );
 	Chip_ADC_Int_SetChannelCmd( LPC_ADC0, ADC_CH2, DISABLE );
@@ -237,13 +237,13 @@ TASK(Analogic2)
 		} ADC_CHANNEL_T;*/
 
 	//Chip_ADC_EnableChannel(LPC_ADC0, lpcAdcChannel, ENABLE);
-	Chip_ADC_EnableChannel(LPC_ADC0, ADC_CH0, ENABLE);
+	Chip_ADC_EnableChannel(LPC_ADC0, ADC_CH1, ENABLE);
 	Chip_ADC_SetStartMode(LPC_ADC0, ADC_START_NOW, ADC_TRIGGERMODE_RISING);
-	while( (Chip_ADC_ReadStatus(LPC_ADC0, ADC_CH0, ADC_DR_DONE_STAT) != SET) );
+	while( (Chip_ADC_ReadStatus(LPC_ADC0, ADC_CH1, ADC_DR_DONE_STAT) != SET) );
 
-	Chip_ADC_ReadValue( LPC_ADC0, ADC_CH0, &analogValue );
+	Chip_ADC_ReadValue( LPC_ADC0, ADC_CH1, &analogValue );
 
-	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH0, DISABLE );
+	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH1, DISABLE );
 
 	//ciaaPOSIX_printf(&analogValue);
 
