@@ -73,6 +73,7 @@
 #include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_echo_mod.h"         /* <= own header */
 #include "chip.h"
+//#include "cr_startup_lpc43xx.c"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -127,7 +128,7 @@ static uint32_t Periodic_Task_Counter;
 
 
 uint8_t leerUART(void){
-	uint8_t receivedByte = 0;
+	uint8_t receivedByte = 1;
 	if (Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_RDR){
 		receivedByte = Chip_UART_ReadByte(LPC_USART2);
 	}
@@ -137,13 +138,20 @@ uint8_t leerUART(void){
 
 
 
-void UART2_IRQHandler(void){
+/*OSEK_ISR_UART2_IRQHandler(){
 	uint8_t byte;
 	byte=leerUART();
 	while ((Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_THRE) == 0); /* Wait for space in FIFO */
-	   Chip_UART_SendByte(LPC_USART2, byte);
+//	   Chip_UART_SendByte(LPC_USART2, byte);
+//}
+ISR(UART2_IRQHandler)
+{
+	uint8_t byte;
+	byte=leerUART();
+	while ((Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_THRE) == 0); /* Wait for space in FIFO */{
+		Chip_UART_SendByte(LPC_USART2, byte);
+	}
 }
-
 
 
 
@@ -223,6 +231,12 @@ TASK(InitTask)
 	Chip_SCU_PinMux(7, 1, MD_PDN, FUNC6);              /* P7_1,FUNC6: UART2_TXD */
 	Chip_SCU_PinMux(7, 2, MD_PLN|MD_EZI|MD_ZI, FUNC6); /* P7_2,FUNC6: UART2_RXD */
 
+	/* Enable UART Rx Interrupt */
+	   Chip_UART_IntEnable(LPC_USART2, UART_IER_RBRINT ); /* Receiver Buffer Register Interrupt */
+	   /* Enable UART line status interrupt */
+	  Chip_UART_IntEnable(LPC_USART2, UART_IER_RLSINT ); /* LPC43xx User manual page 1118 */
+
+
    /* open UART connected to RS232 connector */
 				//fd_uart2 = ciaaPOSIX_open("/dev/serial/uart/2", ciaaPOSIX_O_RDWR);
 
@@ -275,17 +289,13 @@ TASK(SerialEchoTask)
       //}
 
       /* blink output 5 with each loop */
-	   uint8_t dato=1;
-	  dato=leerUART();
-	  if(dato=='0'){
-		  if(Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, 0, 14 )==TRUE){
-		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
-		  }
-		  else{
-		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
-		  }
-	  }
-
+	  // uint8_t byte;
+	   //	byte=leerUART();
+	   //	if ((Chip_UART_ReadLineStatus(LPC_USART2)== 0)){; /* Wait for space in FIFO */
+			//while((Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_THRE)==0){
+				//Chip_UART_SendByte(LPC_USART2, byte);
+			//}
+	   	//}
 
    }
 }
@@ -326,6 +336,17 @@ TASK(Blinkeo)
    /* Print Task info */
    Periodic_Task_Counter++;
    ciaaPOSIX_printf("Periodic Task: %d\n", Periodic_Task_Counter);
+
+   uint8_t dato=1;
+  	  dato=leerUART();
+  	  if(dato=='0'){
+  		  if(Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, 1, 12 )==TRUE){
+  		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 12, FALSE);
+  		  }
+  		  else{
+  		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 12, TRUE);
+  		  }
+  	  }
 
    /* end PeriodicTask */
    TerminateTask();
