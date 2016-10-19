@@ -307,6 +307,7 @@ TASK(SerialEchoTask)
 	     		  else{
 	     		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 12, TRUE);
 	     		  }
+	     		  data=1;
 	     	  }
 
    }
