@@ -111,7 +111,7 @@ static int32_t fd_uart2;
 static uint32_t Periodic_Task_Counter;
 
 /*==================[external data definition]===============================*/
-
+uint8_t data;
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
@@ -148,7 +148,9 @@ ISR(UART2_IRQHandler)
 {
 	uint8_t byte;
 	byte=leerUART();
+	data=byte;
 	while ((Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_THRE) == 0); /* Wait for space in FIFO */{
+		//data=byte;
 		Chip_UART_SendByte(LPC_USART2, byte);
 	}
 }
@@ -296,6 +298,16 @@ TASK(SerialEchoTask)
 				//Chip_UART_SendByte(LPC_USART2, byte);
 			//}
 	   	//}
+	   //uint8_t dato=1;
+	     	  //dato=leerUART();  //problema cuando envio se dirige directamente a subrutina y se pierde valor
+	     	  if(data=='0'){
+	     		  if(Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, 1, 12 )==TRUE){
+	     		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 12, FALSE);
+	     		  }
+	     		  else{
+	     		  	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 12, TRUE);
+	     		  }
+	     	  }
 
    }
 }
