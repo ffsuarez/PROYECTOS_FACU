@@ -1,0 +1,2 @@
+Fue necesario comentar ISR UART2 dentro de ciaa UART en *drivers* --> no recuerdo ubicacion precisa
+Siguiente ejemplo elimina tarea "blinkeo" y realiza otras activaciones

@@ -1,0 +1,1 @@
+Fue necesario "comentar" linea que define los boolean TRUE y FALSE de LPCOpen porque genera conflicto
