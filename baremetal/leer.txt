@@ -1,0 +1,6 @@
+Aclaracion:
+Previamente se habia comentado en ciaa UART el handler correspondiente a UART2
+Previamente para hacer funcionar este proyecto se habia comentado lo de lpctypes.h
+Recordar que se debe hacer clean "solo"
+La subrutina de atencion de interrupcion de la UART se coloca dentro de programa main
+debido a que estoy obligado a hacer pooling
