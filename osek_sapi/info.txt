@@ -1,1 +1,4 @@
 20/10 prende una vez el led pero no vuelve a tarea
+25/10 incluyo clearevent..no tengo placa
+inclusion de sapi.h no la reconoce
+al parecer tratar de incluir en paths and symbols, la carpeta sapi-bm/inc tampoco resulta..se intento arreglar las indexaciones y no resulta
