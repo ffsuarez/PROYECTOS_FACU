@@ -80,6 +80,7 @@
 #include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_mod.h"         /* <= own header */
 #include "chip.h"
+//#include "sAPI.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -110,17 +111,7 @@ static int32_t fd_out;
  */
 int main(void)
 {
-   /* Starts the operating system in the Application Mode 1 */
-   /* This example has only one Application Mode */
-	Chip_GPIO_Init(LPC_GPIO_PORT);
-		Chip_SCU_PinMux(
-		            2,
-		            10,
-		            SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
-		            SCU_MODE_FUNC0
-		         );
-		Chip_GPIO_SetDir( LPC_GPIO_PORT, 0, ( 1 << 14 ), 1 );
-		Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, 0);
+	 boardConfig();
 	StartOS(AppMode1);
 
    /* StartOs shall never returns, but to avoid compiler warnings or errors
