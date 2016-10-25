@@ -3,3 +3,18 @@
 inclusion de sapi.h no la reconoce
 al parecer tratar de incluir en paths and symbols, la carpeta sapi-bm/inc tampoco resulta..se intento arreglar las indexaciones y no resulta
 tampoco funciona si agrego la carpeta src, si se comenta dicha inclusion en el .c tampoco reconoce instrucciones de la sapi
+
+al incluir los archivos sapi.h y sapi.c que corresponden de acuerdo con el mail de eric pernia, compila el proyecto
+
+al incluir la instruccion 'digitalConfig( 0, ENABLE_DIGITAL_IO )' no la reconoce
+
+al incluir en .c 'DigitalIO.h' tiene problemas con variables booleanas..intentare descomentar lpc_types.h (linea 50)
+
+especificamente tiene problemas con la definicion de bool_t
+
+al tratar de comentar lpc_types ocurre problema dado anteriormente con Types.h del OS
+
+se descomento y no aparece el problema del types.h
+
+se corrigio el problema incluyendo en el .c, siguiendo este orden...sapi,board,datatypes,peripheral,digital y comentando en 
+sapi.h todo lo que use interrupciones...o sea... comentando todos los .h que no sean compatibles con osek

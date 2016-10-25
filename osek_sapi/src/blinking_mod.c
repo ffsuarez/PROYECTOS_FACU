@@ -80,7 +80,12 @@
 #include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_mod.h"         /* <= own header */
 #include "chip.h"
-//#include "sAPI.h"
+#include "sAPI.h"
+#include "sAPI_Board.h"
+#include "sAPI_DataTypes.h"
+#include "sAPI_PeripheralMap.h"
+#include "sAPI_DigitalIO.h"
+
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -150,15 +155,11 @@ void ErrorHook(void)
  */
 TASK(INICIAL)
 {
-   /* init CIAA kernel and devices */
-   ciaak_start();
-
-   /* print message (only on x86) */
-   ciaaPOSIX_printf("Init Task...\n");
-
-   /* open CIAA digital outputs */
-   fd_out = ciaaPOSIX_open("/dev/dio/out/0", ciaaPOSIX_O_RDWR);
-
+	digitalConfig( 0, ENABLE_DIGITAL_IO );
+	digitalConfig( TEC1, INPUT );
+    digitalConfig( TEC2, INPUT );
+    digitalConfig( TEC3, INPUT );
+    digitalConfig( TEC4, INPUT );
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
     *  - and then every 250 ticks (250 ms)

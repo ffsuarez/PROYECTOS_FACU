@@ -39,23 +39,23 @@
 /*==================[inclusions]=============================================*/
 
 #include "sAPI_DataTypes.h"
-#include "sAPI_IsrVector.h"
+//#include "sAPI_IsrVector.h"
 
 #include "sAPI_Board.h"
 #include "sAPI_PeripheralMap.h"
 #include "sAPI_DigitalIO.h"
-#include "sAPI_AnalogIO.h"
-#include "sAPI_Uart.h"
-#include "sAPI_Timer.h"
-#include "sAPI_Pwm.h"
-#include "sAPI_I2c.h"
-#include "sAPI_Rtc.h"
+//#include "sAPI_AnalogIO.h"
+//#include "sAPI_Uart.h"
+//#include "sAPI_Timer.h"
+//#include "sAPI_Pwm.h"
+//#include "sAPI_I2c.h"
+//#include "sAPI_Rtc.h"
 
-#include "sAPI_Tick.h"
-#include "sAPI_Delay.h"
+//#include "sAPI_Tick.h"
+//#include "sAPI_Delay.h"
 
-#include "sAPI_Servo.h"
-#include "sAPI_Hmc5883l.h"
+//#include "sAPI_Servo.h"
+//#include "sAPI_Hmc5883l.h"
 
 /*==================[cplusplus]==============================================*/
 
