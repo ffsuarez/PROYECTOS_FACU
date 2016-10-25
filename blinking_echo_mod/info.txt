@@ -1,0 +1,1 @@
+Debi comentar el handler de la ciaa ISR(UART2_IRQHandler) ubicado en Firmware/modules/drivers/cortexM4/lpc43xx/lpc4337/src/ciaaDriverUart.c

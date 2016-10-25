@@ -192,7 +192,7 @@ TASK(PERIODICA2)
    else{
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
    }
-
+   ClearEvent(tiempo);
    TerminateTask();
 }
 
