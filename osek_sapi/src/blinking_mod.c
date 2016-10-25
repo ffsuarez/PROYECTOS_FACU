@@ -160,6 +160,14 @@ TASK(INICIAL)
     digitalConfig( TEC2, INPUT );
     digitalConfig( TEC3, INPUT );
     digitalConfig( TEC4, INPUT );
+    digitalConfig( LEDR, OUTPUT );
+    digitalConfig( LEDG, OUTPUT );
+    digitalConfig( LEDB, OUTPUT );
+    digitalConfig( LED1, OUTPUT );
+    digitalConfig( LED2, OUTPUT );
+    digitalConfig( LED3, OUTPUT );
+
+    digitalConfig( DIO15, OUTPUT );
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
     *  - and then every 250 ticks (250 ms)
@@ -178,7 +186,7 @@ TASK(INICIAL)
  */
 TASK(PERIODICA2)
 {
-   if(Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, 0, 14 )==TRUE){
+   if(digitalRead(LED1)==ON){
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
    }
    else{
