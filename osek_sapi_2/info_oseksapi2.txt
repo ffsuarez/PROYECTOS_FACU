@@ -18,3 +18,9 @@ se descomento y no aparece el problema del types.h
 
 se corrigio el problema incluyendo en el .c, siguiendo este orden...sapi,board,datatypes,peripheral,digital y comentando en 
 sapi.h todo lo que use interrupciones...o sea... comentando todos los .h que no sean compatibles con osek
+
+-------------------------------------
+en osek_sapi_2 tuve que hacer click derecho sobre proyecto y en index puse lo de problems
+
+existe problema cuando declaro un evento llamad LED1,LED2,etc porque la sapi los declara igual a los pines..se debe cambiar
+el nombre del evento
