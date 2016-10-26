@@ -85,7 +85,7 @@
 #include "sAPI_DataTypes.h"
 #include "sAPI_PeripheralMap.h"
 #include "sAPI_DigitalIO.h"
-
+//#include "Flex_LCD420_CIAA.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -166,7 +166,10 @@ TASK(INICIAL)
     digitalConfig( LED1, OUTPUT );
     digitalConfig( LED2, OUTPUT );
     digitalConfig( LED3, OUTPUT );
+    lcd_init();
+    lcd_gotoxy(1,1);
 
+    SetEvent(LED_1,tecla1);
     //digitalConfig( DIO15, OUTPUT );
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
@@ -189,6 +192,8 @@ TASK(LED_1)
 	ClearEvent(tecla4);
 	if(digitalRead(TEC1)==ON){
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
+	   lcd_gotoxy(1,2);
+	   lcdWrite("1");
    }
    else{
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
@@ -201,6 +206,8 @@ TASK(LED_2)
 {
    if(digitalRead(TEC2)==ON){
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
+	   lcd_gotoxy(1,2);
+	   lcdWrite("2");
    }
    else{
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
@@ -214,6 +221,8 @@ TASK(LED_3)
 {
    if(digitalRead(TEC3)==ON){
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
+	   lcd_gotoxy(1,2);
+	   lcdWrite("3");
    }
    else{
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
@@ -227,6 +236,8 @@ TASK(LED_4)
 {
    if(digitalRead(TEC4)==ON){
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
+	   lcd_gotoxy(1,2);
+	   lcdWrite("4");
    }
    else{
 	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
@@ -235,6 +246,7 @@ TASK(LED_4)
    ClearEvent(tecla3);
    TerminateTask();
 }
+
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

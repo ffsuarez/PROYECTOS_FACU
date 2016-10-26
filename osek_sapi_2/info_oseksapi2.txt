@@ -24,3 +24,21 @@ en osek_sapi_2 tuve que hacer click derecho sobre proyecto y en index puse lo de
 
 existe problema cuando declaro un evento llamad LED1,LED2,etc porque la sapi los declara igual a los pines..se debe cambiar
 el nombre del evento
+
+quise agregar la libreria de sapi para el LCD pero como usa interrupciones por systick no puedo generar por interrupcion las 
+demoras necesarias porque hay dos opciones, una es usar un serivicio de interrupcion de OSEK para el systick (ISR2) pero
+pero no tendria sentido
+Otra cosa...no es posible modificar el archivo lcd.h porque es incompatible
+
+Para solucionar eso de el LCD use una funcion que realiza la demora por iteraciones..despues de investigar decidi que la 
+mejor opcion sea eso debido a que tratar de utilizar el systick genera conflictos con el RTOS porque el mismo SO tiene una
+subrutina (handler) definido para el systick, hace un tiempo me paso algo parecido con la UART, pero decidi que no seria
+buena practica comentar esta subrutina de atención.
+
+Otro problema que surgia era que incluso utilizando esa subrutina, al tratar de compilar tambien producia problemas
+con el IRQ (algo que inefectivo o sin efecto y con multiples definiciones)-->al tratar de encontrar esas definiciones
+se ve en el unico lugar donde esta definido es en el driver de cortex m4 del RTOS, por lo tanto se debio buscar la
+solucion por otro camino,dado que comentarlo o dejarlo sin efecto seria perjudicial.
+La solucion que se encontro fue NO incluir "Flex_LCD420_CIAA.h" en el programa principal .c
+
+Tambien dentro del "Flex_LCD420_CIAA.c" se incluyo "sAPI.h" y se elimino la parte donde incluye el .h que dice "./"
