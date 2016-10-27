@@ -1,9 +1,7 @@
-/* Copyright 2014, Mariano Cerdeiro
- * Copyright 2014, Pablo Ridolfi
- * Copyright 2014, Juan Cecconi
- * Copyright 2014, Gustavo Muro
+/* Copyright 2015-2016, Eric Pernia.
+ * All rights reserved.
  *
- * This file is part of CIAA Firmware.
+ * This file is part sAPI library for microcontrollers.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -33,46 +31,69 @@
  *
  */
 
-#ifndef _BLINKING_H_
-#define _BLINKING_H_
-/** \brief Blinking example header file
- **
- ** This is a mini example of the CIAA Firmware
- **
- **/
+/* Date: 2015-09-23 */
 
-/** \addtogroup CIAA_Firmware CIAA Firmware
- ** @{ */
-/** \addtogroup Examples CIAA Firmware Examples
- ** @{ */
-/** \addtogroup Blinking Blinking example header file
- ** @{ */
-
-/*
- * Initials     Name
- * ---------------------------
- *
- */
-
-/*
- * modification history (new versions first)
- * -----------------------------------------------------------
- * yyyymmdd v0.0.1 initials initial version
- */
+#ifndef _SAPI_DIGITALIO_H_
+#define _SAPI_DIGITALIO_H_
 
 /*==================[inclusions]=============================================*/
+
+#include "sAPI_PeripheralMap.h"
+
+/*==================[cplusplus]==============================================*/
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*==================[macros]=================================================*/
 
 /*==================[typedef]================================================*/
 
+/* Pin modes */
+/*
+ *  INPUT  =  0    (No PULLUP or PULLDOWN)
+ *  OUTPUT =  1
+ *  INPUT_PULLUP
+ *  INPUT_PULLDOWN
+ *  INPUT_REPEATER (PULLUP and PULLDOWN)
+ *  INITIALIZE
+ */
+typedef enum{
+   INPUT, OUTPUT,
+   INPUT_PULLUP, INPUT_PULLDOWN, INPUT_REPEATER,
+   ENABLE_DIGITAL_IO
+} digitalIOConfig_t;
+
+
+/* ----- Begin Pin Config Structs NXP LPC4337 ----- */
+
+typedef struct{
+   int8_t port;
+   int8_t pin;
+} gpioConfigLpc4337_t;
+
+typedef struct{
+    pinConfigLpc4337_t pinName;
+                int8_t func;
+   gpioConfigLpc4337_t gpio;
+} pinConfigDigitalLpc4337_t;
+
+/* ------ End Pin Config Structs NXP LPC4337 ------ */
+
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
 
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/*==================[end of file]============================================*/
-#endif /* #ifndef _BLINKING_H_ */
+bool_t digitalConfig( int8_t, int8_t );
+bool_t digitalRead( int8_t );
+bool_t digitalWrite( int8_t, bool_t );
 
+/*==================[cplusplus]==============================================*/
+
+#ifdef __cplusplus
+}
+#endif
+
+/*==================[end of file]============================================*/
+#endif /* #ifndef _SAPI_DIGITALIO_H_ */
