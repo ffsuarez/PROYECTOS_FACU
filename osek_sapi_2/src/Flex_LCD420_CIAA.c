@@ -1,6 +1,7 @@
 //#include "chip.h"
 #include "sAPI.h"
 #include "Flex_LCD420_CIAA.h"
+#include "string.h"     //warning: incompatible implicit declaration of built-in function 'strlen' es la razon por la cual la inclui
 /*#define TICKRATE_HZ1 10
 int32_t ticks=0;
 void SysTick_Handler(void){
@@ -103,11 +104,18 @@ void lcd_init( void )
 		delaym();
 		j++;
 	}
+	//https://groups.google.com/forum/#!msg/ciaa-firmware/qM84IROges4/jQC1ZhjlDAAJ
+	//hola, ya estoy envindo mensajes al LCD, lo soluciones quitando el "for" :
 
-	for( i = 0; i < sizeof(LCD_INIT_STRING); i++ )
-	{
-		lcd_send_byte( 0, LCD_INIT_STRING[ i ] );
-	}
+    //for( i = 0; i < sizeof(LCD_INIT_STRING); i++ )
+    //{
+    //lcd_send_byte( 0, LCD_INIT_STRING[ i ] );
+   //    }
+
+	//for( i = 0; i < sizeof(LCD_INIT_STRING); i++ )
+	//{
+		//lcd_send_byte( 0, LCD_INIT_STRING[ i ] );
+	//}
 
 }
 
