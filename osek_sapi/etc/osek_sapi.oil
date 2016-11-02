@@ -78,17 +78,18 @@ OSEK OSEK {
       ACTIVATION = 1;
       STACK = 512;
       TYPE = EXTENDED;
-      SCHEDULE = NON;
-      RESOURCE = POSIXR;
+      SCHEDULE = FULL;
+      RESOURCE = tiempor;
       EVENT = tiempo;
    }
 	
    ALARM ActivatePERIODICA2 {
       COUNTER = HardwareCounter;
-      ACTION = SETEVENT {
+      ACTION = ACTIVATETASK {
          TASK = PERIODICA2;
          EVENT = tiempo;
       }
+      
       AUTOSTART=FALSE;
    }
 
