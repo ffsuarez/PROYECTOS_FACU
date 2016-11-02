@@ -75,16 +75,16 @@
 */
 /*==================[inclusions]=============================================*/
 #include "os.h"               /* <= operating system header */
-#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
-#include "ciaaPOSIX_string.h" /* <= string header */
-#include "ciaak.h"            /* <= ciaa kernel header */
+//#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
+//#include "ciaaPOSIX_string.h" /* <= string header */
+//#include "ciaak.h"            /* <= ciaa kernel header */
 #include "blinking_mod.h"         /* <= own header */
 #include "chip.h"
 #include "sAPI.h"
-#include "sAPI_Board.h"
-#include "sAPI_DataTypes.h"
-#include "sAPI_PeripheralMap.h"
-#include "sAPI_DigitalIO.h"
+//#include "sAPI_Board.h"
+//#include "sAPI_DataTypes.h"
+//#include "sAPI_PeripheralMap.h"
+//#include "sAPI_DigitalIO.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -116,7 +116,7 @@ static int32_t fd_out;
  */
 int main(void)
 {
-	 boardConfig();
+	 //boardConfig();
 	StartOS(AppMode1);
 
    /* StartOs shall never returns, but to avoid compiler warnings or errors
@@ -155,25 +155,39 @@ void ErrorHook(void)
  */
 TASK(INICIAL)
 {
-	digitalConfig( 0, ENABLE_DIGITAL_IO );
-	digitalConfig( TEC1, INPUT );
-    digitalConfig( TEC2, INPUT );
-    digitalConfig( TEC3, INPUT );
-    digitalConfig( TEC4, INPUT );
-    digitalConfig( LEDR, OUTPUT );
-    digitalConfig( LEDG, OUTPUT );
-    digitalConfig( LEDB, OUTPUT );
-    digitalConfig( LED1, OUTPUT );
-    digitalConfig( LED2, OUTPUT );
-    digitalConfig( LED3, OUTPUT );
+	Chip_GPIO_Init(LPC_GPIO_PORT);
+	//Chip_SCU_PinMux(
+	//		2,
+	//		10,
+	//		SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
+	//		SCU_MODE_FUNC0
+	//);
+	Chip_GPIO_SetPinDIR( LPC_GPIO_PORT, 0, 14, 1 );
+	Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, 1);
 
-    digitalConfig( DIO15, OUTPUT );
+	Chip_SCU_PinMux(
+				2,
+				11,
+				SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
+				SCU_MODE_FUNC0
+		);
+	Chip_GPIO_SetDir( LPC_GPIO_PORT, 1, ( 1 << 11 ), 1 );
+	Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 11, 0);
+
+	Chip_SCU_PinMux(
+			2,
+			11,
+			SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
+			SCU_MODE_FUNC0
+	);
+	Chip_GPIO_SetDir( LPC_GPIO_PORT, 1, ( 1 << 12 ), 1 );
+	Chip_GPIO_SetPinState( LPC_GPIO_PORT, 1, 12, 0);
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
     *  - and then every 250 ticks (250 ms)
     */
    SetRelAlarm(ActivatePERIODICA2, 350, 250);
-
+   digitalWrite(LED2,OFF);
    /* terminate task */
    TerminateTask();
 }
@@ -186,14 +200,18 @@ TASK(INICIAL)
  */
 TASK(PERIODICA2)
 {
-   if(digitalRead(LED1)==ON){
-	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
+   bool_t i;
+	if(Chip_GPIO_GetPinState( LPC_GPIO_PORT, 0, 14 )==TRUE){
+	   //Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, FALSE);
+	   digitalWrite(LED1,OFF);
+	   TerminateTask();
    }
-   else{
-	   Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
+   if(Chip_GPIO_GetPinState( LPC_GPIO_PORT, 0, 14 )==FALSE){
+	   //Chip_GPIO_SetPinState( LPC_GPIO_PORT, 0, 14, TRUE);
+	   digitalWrite(LED1,ON);
+	   TerminateTask();
    }
-   ClearEvent(tiempo);
-   TerminateTask();
+
 }
 
 /** @} doxygen end group definition */

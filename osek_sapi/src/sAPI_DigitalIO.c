@@ -273,7 +273,7 @@ bool_t digitalConfig( int8_t pin, int8_t config ){
          Chip_SCU_PinMux(
             pinNamePort,
             pinNamePin,
-            SCU_MODE_INACT | SCU_MODE_ZIF_DIS,
+            MD_PUP ,
             func
          );
          Chip_GPIO_SetDir( LPC_GPIO_PORT, gpioPort, ( 1 << gpioPin ), OUTPUT );
@@ -313,7 +313,7 @@ bool_t digitalWrite( int8_t pin, bool_t value ){
 
 bool_t digitalRead( int8_t pin ){
 
-   bool_t ret_val     = OFF;
+   bool_t ret_val= OFF     ;
 
    int8_t pinNamePort = 0;
    int8_t pinNamePin  = 0;
@@ -326,7 +326,7 @@ bool_t digitalRead( int8_t pin ){
    digitalObtainPinConfig( pin, INPUT, &pinNamePort, &pinNamePin, &func,
                            &gpioPort, &gpioPin );
 
-   ret_val = (bool_t) Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, gpioPort, gpioPin );
+   ret_val = (bool_t)  Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, gpioPort, gpioPin );
 
    return ret_val;
 }

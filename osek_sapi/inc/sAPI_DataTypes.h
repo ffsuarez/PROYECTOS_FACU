@@ -48,7 +48,7 @@ extern "C" {
 #endif
 
 /*==================[macros]=================================================*/
-/* Functional states */
+/* Functional states*/
 #ifndef ON
    #define ON     1
 #endif

@@ -61,7 +61,7 @@ MODS ?= modules$(DS)posix           \
         modules$(DS)ciaak           \
         modules$(DS)drivers         \
         modules$(DS)rtos            \
-        modules$(DS)libs			\
+        modules$(DS)libs
         
         #modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_DataTypes.h
       #  modules$(DS)sapi_bm$(DS)inc$(DS)sAPI_Board.h	\
