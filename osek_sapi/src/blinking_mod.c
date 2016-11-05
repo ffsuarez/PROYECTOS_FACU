@@ -185,11 +185,11 @@ TASK(INICIAL)
 TASK(PERIODICA2)
 {
 	int i=3;
-	if(digitalRead(LED1)==ON){
+	if(digitalRead(TEC1)==ON){
 	   digitalWrite(LED1,OFF);
 	   //TerminateTask();
    }
-   if(digitalRead(LED1)==OFF){
+   if(digitalRead(TEC1)==OFF){
 	   digitalWrite(LED1,ON);
 	  // TerminateTask();
    }
