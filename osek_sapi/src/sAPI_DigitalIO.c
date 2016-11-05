@@ -326,7 +326,7 @@ bool_t digitalRead( int8_t pin ){
    digitalObtainPinConfig( pin, INPUT, &pinNamePort, &pinNamePin, &func,
                            &gpioPort, &gpioPin );
 
-   ret_val = (bool_t)  Chip_GPIO_ReadPortBit( LPC_GPIO_PORT, gpioPort, gpioPin );
+   ret_val = (bool_t) Chip_GPIO_GetPinState( LPC_GPIO_PORT, gpioPort, gpioPin );
 
    return ret_val;
 }
