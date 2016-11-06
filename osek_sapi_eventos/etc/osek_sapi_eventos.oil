@@ -96,14 +96,22 @@ OSEK OSEK {
       RESOURCE = tecla2r;
       EVENT = tecla2;
    }
-	TASK ESPERA {
+	TASK ESPERATEC1 {
       PRIORITY = 4;
       ACTIVATION = 1;
       STACK = 512;
       TYPE = EXTENDED;
       SCHEDULE = FULL;
       RESOURCE = no_teclar;
-      EVENT = no_tecla;
+      EVENT = sueltotecla1;
    }
-	
+	TASK ESPERATEC2 {
+      PRIORITY = 4;
+      ACTIVATION = 1;
+      STACK = 512;
+      TYPE = EXTENDED;
+      SCHEDULE = FULL;
+      RESOURCE = no_teclar;
+      EVENT = sueltotecla2;
+   }
 };

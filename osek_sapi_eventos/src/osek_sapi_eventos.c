@@ -75,16 +75,11 @@
 */
 /*==================[inclusions]=============================================*/
 #include "os.h"               /* <= operating system header */
-#include "ciaaPOSIX_stdio.h"  /* <= device handler header */
-#include "ciaaPOSIX_string.h" /* <= string header */
-#include "ciaak.h"            /* <= ciaa kernel header */
+
 #include "osek_sapi_eventos.h"         /* <= own header */
-#include "chip.h"
+
 #include "sAPI.h"
-#include "sAPI_Board.h"
-#include "sAPI_DataTypes.h"
-#include "sAPI_PeripheralMap.h"
-#include "sAPI_DigitalIO.h"
+
 //#include "Flex_LCD420_CIAA.h"
 /*==================[macros and definitions]=================================*/
 
@@ -168,8 +163,8 @@ TASK(INICIAL)
     digitalConfig( LED3, OUTPUT );
     //lcd_init();
     //lcd_gotoxy(1,1);
-    ActivateTask(LED_1);
-    SetEvent(LED_1,tecla1);
+    ActivateTask(ESPERATEC1);
+    SetEvent(ESPERA,sueltotecla1);
     //digitalConfig( DIO15, OUTPUT );
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
@@ -190,51 +185,63 @@ TASK(INICIAL)
 TASK(LED_1)
 {
 	WaitEvent(tecla1);
-	if(digitalRead(TEC1)==OFF){
-		digitalWrite(LEDR,OFF);
-		digitalWrite(LEDB,ON);
+	digitalWrite(LEDR,OFF);
+	digitalWrite(LEDB,ON);
+	if(digitalRead(TEC1)==ON){
+		ActivateTask(ESPERATEC1);	//Activo tarea LED_1  y  provoco el evento
+		SetEvent(ESPERATEC1,sueltotecla1);
+		TerminateTask();		//Termina Tarea ESPERA
 	}
-	else{
-		digitalWrite(LEDB,OFF);
-		digitalWrite(LEDR,OFF);
-	}
-	if(digitalRead(TEC2)==OFF){
-		ClearEvent(tecla1);
-		ActivateTask(LED_2);
-		SetEvent(LED_2,tecla2);
-	}
-	else{
-		ChainTask(ESPERA);
-	}
-	TerminateTask();
+	ChainTask(LED_1);
+
+
+	//TerminateTask();
 }
 
-TASK(ESPERA){
-	if(digitalRead(TEC1)==OFF){
-		ActivateTask(LED_1);
+TASK(ESPERATEC1){
+	if(digitalRead(TEC1)==OFF){  //si apreto TEC1
+		ActivateTask(LED_1);	//Activo tarea LED_1  y  provoco el evento
 		SetEvent(LED_1,tecla1);
-		TerminateTask();
-	}
-	else{
-		ChainTask(ESPERA);
+		WaitEvent(sueltotecla1);		//Termina Tarea ESPERA
+		ClearEvent(sueltotecla1);
+		ActivateTask(ESPERATEC2);	//Activo tarea LED_1  y  provoco el evento
+		SetEvent(ESPERATEC2,tecla2);
+		TerminateTask();		//Termina Tarea ESPERA
 	}
 
+	ClearEvent(sueltotecla1);
+	ChainTask(ESPERATEC1);
+
 }
+
+TASK(ESPERATEC2){
+	ClearEvent(ESPERATEC1,sueltotecla1);
+	if(digitalRead(TEC2)==OFF){  //si apreto TEC1
+		ActivateTask(LED_2);	//Activo tarea LED_2  y  provoco el evento
+		SetEvent(LED_2,tecla2);
+		WaitEvent(sueltotecla2);		//Termina Tarea ESPERA
+		ActivateTask(ESPERATEC1);	//Activo tarea LED_1  y  provoco el evento
+		SetEvent(ESPERATEC1,sueltotecla1);
+		TerminateTask();		//Termina Tarea ESPERA
+	}
+	ChainTask(ESPERATEC2);
+}
+
 
 TASK(LED_2)
 {
 	WaitEvent(tecla2);
-
-	if(digitalRead(TEC2)==OFF){
-		digitalWrite(LEDB,OFF);
-		digitalWrite(LEDR,ON);
-		ClearEvent(tecla1);
-		ClearEvent(tecla2);
+	digitalWrite(LEDR,ON);
+	digitalWrite(LEDB,OFF);
+	if(digitalRead(TEC2)==ON){
+		ActivateTask(ESPERATEC2);	//Activo tarea ESPERATEC1  y  provoco el evento
+		SetEvent(ESPERATEC2,sueltotecla2);
+		TerminateTask();		//Termina Tarea ESPERA
 	}
-	ChainTask(ESPERA);
+	ChainTask(LED_2);
 
 
-   TerminateTask();
+	//TerminateTask();
 }
 
 
