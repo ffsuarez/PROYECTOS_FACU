@@ -79,7 +79,7 @@ OSEK OSEK {
 
    TASK LED_1 {
       PRIORITY = 3;
-      ACTIVATION = 1;
+      ACTIVATION = 2;
       STACK = 512;
       TYPE = EXTENDED;
       SCHEDULE = FULL;
@@ -88,8 +88,8 @@ OSEK OSEK {
    }
    
    TASK LED_2 {
-      PRIORITY = 2;
-      ACTIVATION = 1;
+      PRIORITY = 3;
+      ACTIVATION = 2;
       STACK = 512;
       TYPE = EXTENDED;
       SCHEDULE = FULL;

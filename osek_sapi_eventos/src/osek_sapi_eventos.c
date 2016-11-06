@@ -161,10 +161,10 @@ TASK(INICIAL)
     digitalConfig( LED1, OUTPUT );
     digitalConfig( LED2, OUTPUT );
     digitalConfig( LED3, OUTPUT );
-    //lcd_init();
-    //lcd_gotoxy(1,1);
-    ActivateTask(ESPERATEC1);
-    SetEvent(ESPERA,sueltotecla1);
+    lcd_init();
+    lcd_gotoxy(1,1);
+    ActivateTask(LED_1);
+    SetEvent(LED_1,tecla1);
     //digitalConfig( DIO15, OUTPUT );
    /* activate periodic task:
     *  - for the first time after 350 ticks (350 ms)
@@ -184,15 +184,22 @@ TASK(INICIAL)
  */
 TASK(LED_1)
 {
-	WaitEvent(tecla1);
-	digitalWrite(LEDR,OFF);
-	digitalWrite(LEDB,ON);
-	if(digitalRead(TEC1)==ON){
-		ActivateTask(tecla2);	//Activo tarea LED_1  y  provoco el evento
+
+	ClearEvent(tecla1);
+	if(digitalRead(TEC1)==OFF){
+		digitalWrite(LEDR,OFF);
+		digitalWrite(LEDB,ON);
+		ChainTask(LED_1);
+		//ActivateTask(LED_1);
+		//SetEvent(LED_1,tecla1);
+		//TerminateTask();
+	}
+	else{
+
+		ActivateTask(LED_2);	//Activo tarea LED_1  y  provoco el evento
 		SetEvent(LED_2,tecla2);
 		TerminateTask();		//Termina Tarea ESPERA
 	}
-	ChainTask(LED_1);
 
 
 	//TerminateTask();
@@ -201,15 +208,24 @@ TASK(LED_1)
 
 TASK(LED_2)
 {
-	WaitEvent(tecla2);
-	digitalWrite(LEDR,ON);
-	digitalWrite(LEDB,OFF);
-	if(digitalRead(TEC2)==ON){
-		ActivateTask(tecla1);	//Activo tarea ESPERATEC1  y  provoco el evento
+
+	ClearEvent(tecla2);
+	if(digitalRead(TEC2)==OFF){
+
+		digitalWrite(LEDR,ON);
+		digitalWrite(LEDB,OFF);
+		ChainTask(LED_2);
+		//ActivateTask(LED_2);
+		//SetEvent(LED_2,tecla2);
+		//TerminateTask();
+	}
+	else{
+
+		ActivateTask(LED_1);	//Activo tarea ESPERATEC1  y  provoco el evento
 		SetEvent(LED_1,tecla1);
 		TerminateTask();		//Termina Tarea ESPERA
 	}
-	ChainTask(LED_2);
+
 
 
 	//TerminateTask();

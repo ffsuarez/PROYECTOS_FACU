@@ -224,7 +224,7 @@ TASK(Analogic2)
    /* end of Blinking */
 	//uint8_t lpcAdcChannel = 66 ; //modificado para tomar desde A0
 	uint16_t analogValue = 0;
-
+	float dato=0;
 	 /* typedef enum CHIP_ADC_CHANNEL {
 		ADC_CH0 = 0,	< ADC channel 0
 			ADC_CH1,		/**< ADC channel 1
@@ -244,7 +244,7 @@ TASK(Analogic2)
 	Chip_ADC_ReadValue( LPC_ADC0, ADC_CH1, &analogValue );
 
 	Chip_ADC_EnableChannel( LPC_ADC0, ADC_CH1, DISABLE );
-
+	dato= (5.0*analogValue/1023);
 	//ciaaPOSIX_printf(&analogValue);
 
    TerminateTask();
