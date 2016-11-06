@@ -188,43 +188,14 @@ TASK(LED_1)
 	digitalWrite(LEDR,OFF);
 	digitalWrite(LEDB,ON);
 	if(digitalRead(TEC1)==ON){
-		ActivateTask(ESPERATEC1);	//Activo tarea LED_1  y  provoco el evento
-		SetEvent(ESPERATEC1,sueltotecla1);
+		ActivateTask(tecla2);	//Activo tarea LED_1  y  provoco el evento
+		SetEvent(LED_2,tecla2);
 		TerminateTask();		//Termina Tarea ESPERA
 	}
 	ChainTask(LED_1);
 
 
 	//TerminateTask();
-}
-
-TASK(ESPERATEC1){
-	if(digitalRead(TEC1)==OFF){  //si apreto TEC1
-		ActivateTask(LED_1);	//Activo tarea LED_1  y  provoco el evento
-		SetEvent(LED_1,tecla1);
-		WaitEvent(sueltotecla1);		//Termina Tarea ESPERA
-		ClearEvent(sueltotecla1);
-		ActivateTask(ESPERATEC2);	//Activo tarea LED_1  y  provoco el evento
-		SetEvent(ESPERATEC2,tecla2);
-		TerminateTask();		//Termina Tarea ESPERA
-	}
-
-	ClearEvent(sueltotecla1);
-	ChainTask(ESPERATEC1);
-
-}
-
-TASK(ESPERATEC2){
-	ClearEvent(ESPERATEC1,sueltotecla1);
-	if(digitalRead(TEC2)==OFF){  //si apreto TEC1
-		ActivateTask(LED_2);	//Activo tarea LED_2  y  provoco el evento
-		SetEvent(LED_2,tecla2);
-		WaitEvent(sueltotecla2);		//Termina Tarea ESPERA
-		ActivateTask(ESPERATEC1);	//Activo tarea LED_1  y  provoco el evento
-		SetEvent(ESPERATEC1,sueltotecla1);
-		TerminateTask();		//Termina Tarea ESPERA
-	}
-	ChainTask(ESPERATEC2);
 }
 
 
@@ -234,8 +205,8 @@ TASK(LED_2)
 	digitalWrite(LEDR,ON);
 	digitalWrite(LEDB,OFF);
 	if(digitalRead(TEC2)==ON){
-		ActivateTask(ESPERATEC2);	//Activo tarea ESPERATEC1  y  provoco el evento
-		SetEvent(ESPERATEC2,sueltotecla2);
+		ActivateTask(tecla1);	//Activo tarea ESPERATEC1  y  provoco el evento
+		SetEvent(LED_1,tecla1);
 		TerminateTask();		//Termina Tarea ESPERA
 	}
 	ChainTask(LED_2);
