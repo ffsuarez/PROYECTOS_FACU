@@ -67,9 +67,6 @@
 
 /*==================[inclusions]=============================================*/
 #include "os.h"
-#include "ciaaPOSIX_stdio.h"
-#include "ciaaPOSIX_stdlib.h"
-#include "ciaak.h"            /* <= ciaa kernel header */
 #include "osek_sapi_adc.h"
 #include "chip.h"
 #include "sAPI.h"
@@ -166,8 +163,8 @@ TASK(InitTask)
    boardConfig();
    analogConfig( ENABLE_ANALOG_INPUTS );  /* ADC */
    /* end InitTask */
-   lcd_init();
-   lcd_gotoxy(1,1);
+   //lcd_init();
+   //lcd_gotoxy(1,1);
    TerminateTask();
 }
 
@@ -180,7 +177,7 @@ TASK(Analogic2)
 {
 	uint16_t muestra = 0;
 	muestra = analogRead( AI0 );
-	lcdWrite("%1.1f",muestra);
+	//lcdWrite("%1.1f",muestra);
    TerminateTask();
 }
 
