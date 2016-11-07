@@ -167,6 +167,7 @@ TASK(InitTask)
 	if(digitalRead(TEC1)==OFF){
 		ActivateTask(MEDICION);
 		SetEvent(MEDICION,medicion);
+		TerminateTask();
 	}
 
 	ChainTask(InitTask);
@@ -177,12 +178,14 @@ TASK(InitTask)
  * This task is activated every 1ms by the AnalogicAlarm configured in
  * adc_dac.oil
  */
-TASK(Analogic2)
+TASK(MEDICION)
 {
 	uint16_t muestra = 0;
+	float dato=0;
 	WaitEvent(medicion);
 	muestra = analogRead( AI0 );
 	//lcdWrite("%1.1f",muestra);
+	dato=(5.0*muestra)/1024;
 	ClearEvent(medicion);
 	ChainTask(InitTask);
 }
