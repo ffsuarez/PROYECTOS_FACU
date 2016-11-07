@@ -119,7 +119,11 @@ int main(void)
    /* Starts the operating system in the Application Mode 1 */
    /* This example has only one Application Mode */
 					   //ENABLE IMPUTS
+	digitalConfig( 0, ENABLE_DIGITAL_IO );
 
+	digitalConfig( TEC1, INPUT );
+
+	analogConfig( ENABLE_ANALOG_INPUTS );  /* ADC */
 	StartOS(AppMode1);
 
    /* StartOs shall never returns, but to avoid compiler warnings or errors
@@ -158,12 +162,6 @@ void ErrorHook(void)
  */
 TASK(InitTask)
 {
-	digitalConfig( 0, ENABLE_DIGITAL_IO );
-
-	digitalConfig( TEC1, INPUT );
-
-	analogConfig( ENABLE_ANALOG_INPUTS );  /* ADC */
-
 	if(digitalRead(TEC1)==OFF){
 		ActivateTask(MEDICION);
 		SetEvent(MEDICION,medicion);
