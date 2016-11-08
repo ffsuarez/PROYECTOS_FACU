@@ -105,53 +105,42 @@
    led_off(LED2);
    led_off(LED3);
    led_off(LED_RGB_B);
-<<<<<<< HEAD
+//<<<<<<< HEAD
    port_pin(6,10, disable, low);
-=======
->>>>>>> 274712184375b9f4cea9785f942a8561e451895b
+//=======
+//>>>>>>> 274712184375b9f4cea9785f942a8561e451895b
    if (!_retardo){
-	   lcd_gotoxy(10,1);
-	   conteo=conteo+1;
-	   sprintf(cadena,"%d",conteo);
-	   printf_lcd(cadena);
 	   _retardo=retardo;
 	   led_on(LED1);
 	   led_on(LED2);
 	   led_on(LED3);
 	   led_on(LED_RGB_B);
-<<<<<<< HEAD
+//<<<<<<< HEAD
        port_pin(6,10, disable, high);
-=======
->>>>>>> 274712184375b9f4cea9785f942a8561e451895b
+//=======
+//>>>>>>> 274712184375b9f4cea9785f942a8561e451895b
    }
 
-    }
+}
 
 int main(void)
 {
   	/* Inserte su código desde aquí */
 	//Matriz de teclado
-	   char keypad[3][4] =   { {'1','2','3'},
-	                           {'4','5','6'},
-	                           {'7','8','9'},
-	                           {'*','0','#'} };
 	   leds_init();
-	   lcd_init_port();
-	   lcd_init();
-	   pulsadores_init();
-<<<<<<< HEAD
-	   port_pin(6,10,MD_PUP,init_out);
+
+//<<<<<<< HEAD
+
        RITIMER_IRQ=11;
-=======
+//=======
 	   RITIMER_IRQ=11;
->>>>>>> 274712184375b9f4cea9785f942a8561e451895b
-	   retardo=5;
+//>>>>>>> 274712184375b9f4cea9785f942a8561e451895b
+	   retardo=4;
 	   _retardo=retardo;
 	   Chip_RIT_Init(LPC_RITIMER);
-	   Chip_RIT_SetTimerInterval(LPC_RITIMER,50);
+	   Chip_RIT_SetTimerInterval(LPC_RITIMER,250);
 	   NVIC_EnableIRQ(RITIMER_IRQ);
-	   lcd_gotoxy(1, 1);
-	   printf_lcd("Contador:\0");
+
 
 	   while(1){
 
