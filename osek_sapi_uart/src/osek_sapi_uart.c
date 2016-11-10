@@ -159,8 +159,10 @@ TASK(INICIAL)
     digitalConfig( LED1, OUTPUT );
     digitalConfig( LED2, OUTPUT );
     digitalConfig( LED3, OUTPUT );
+    lcd_init_port();
     lcd_init();
     lcd_gotoxy(1,1);
+
     uartConfig( UART_USB, 115200 );
 	ActivateTask(uart);
 	SetEvent(uart,recibo);
@@ -193,6 +195,7 @@ TASK(LED_1)
 	digitalWrite(LEDB,OFF);
 	digitalWrite(LEDR,OFF);
 	digitalWrite(LEDG,OFF);
+	lcd_putc("LED1");
 	ClearEvent(tecla1);
 	TerminateTask();
 }
@@ -206,6 +209,7 @@ TASK(LED_2)
 	digitalWrite(LEDB,OFF);
 	digitalWrite(LEDR,OFF);
 	digitalWrite(LEDG,OFF);
+	lcd_putc("LED2");
 	ClearEvent(tecla2);
 	TerminateTask();
 
@@ -220,6 +224,7 @@ TASK(LED_3)
 	digitalWrite(LEDB,OFF);
 	digitalWrite(LEDR,OFF);
 	digitalWrite(LEDG,OFF);
+	lcd_putc("LED3");
 	ClearEvent(tecla3);
 	TerminateTask();
 }
@@ -233,6 +238,7 @@ TASK(LED_B)
 	digitalWrite(LEDB,ON);
 	digitalWrite(LEDR,OFF);
 	digitalWrite(LEDG,OFF);
+	lcd_putc("LEDB");
 	ClearEvent(teclaB);
 	TerminateTask();
 }
@@ -245,6 +251,7 @@ TASK(LED_R)
 	digitalWrite(LEDB,OFF);
 	digitalWrite(LEDR,ON);
 	digitalWrite(LEDG,OFF);
+	lcd_putc("LEDR");
 	ClearEvent(teclaR);
 	TerminateTask();
 }
@@ -258,6 +265,7 @@ TASK(LED_G)
 	digitalWrite(LEDB,OFF);
 	digitalWrite(LEDR,OFF);
 	digitalWrite(LEDG,ON);
+	lcd_putc("LEDG");
 	ClearEvent(teclaG);
 	TerminateTask();
 }
