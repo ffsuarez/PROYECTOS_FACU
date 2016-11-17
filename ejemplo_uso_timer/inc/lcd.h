@@ -7,12 +7,12 @@
 #include "lpc_types.h"
 
 typedef struct __LCD_DATA_Type {
-	Bool D4;
-	Bool D3;
-	Bool D2;
-	Bool D1;
-	Bool RS;
-	Bool EN;
+	bool D4;
+	bool D3;
+	bool D2;
+	bool D1;
+	bool RS;
+	bool EN;
 } LCD_DATA_Type;
 
 #define LCD_PORT 4	// Donde esta el LCD

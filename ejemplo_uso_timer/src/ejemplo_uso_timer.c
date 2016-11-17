@@ -140,8 +140,23 @@ int main(void)
 	   Chip_RIT_Init(LPC_RITIMER);
 	   Chip_RIT_SetTimerInterval(LPC_RITIMER,250);
 	   NVIC_EnableIRQ(RITIMER_IRQ);
-
-
+	   lcd_init_port();
+	   lcd_init();
+	   lcd_gotoxy(1,1);
+	   lcd_putc('F');
+	   lcd_putc('A');
+	   lcd_putc('C');
+	   lcd_putc('U');
+	   lcd_putc('=');
+	   lcd_putc('1');
+	   lcd_gotoxy(1,2);
+	   lcd_putc('L');
+	   lcd_putc('C');
+	   lcd_putc('D');
+	   lcd_putc('=');
+	   lcd_putc('1');
+	   lcd_putc('0');
+	   lcd_putc('0');
 	   while(1){
 
 	           }

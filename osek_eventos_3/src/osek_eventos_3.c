@@ -124,6 +124,7 @@ int main(void)
 	digitalConfig( LED3, OUTPUT );
 	lcd_init();
 	lcd_gotoxy(1,1);
+	lcd_Write("A");
 	StartOS(AppMode1);
 
    /* StartOs shall never returns, but to avoid compiler warnings or errors
