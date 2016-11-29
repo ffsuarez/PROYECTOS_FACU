@@ -1,9 +1,7 @@
 /**
 *	\file funciones.c
-*	\brief 
-*	\details Descripcion detallada del archivo
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief: Archivo que contiene las funciones que utiliza la maquina de
+*	\estado para establecer la secuencia de luces.
 */
 
 
@@ -15,9 +13,6 @@
 /**
 *	\fn void maquina_estado()
 *	\brief Implementacion Switch-Case
-*	\details 
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
 */
 void maquina_estado()
 {
@@ -94,10 +89,8 @@ void maquina_estado()
 
 /**
 *	\fn int PRESS(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Establece la lectura de una entrada digital
+*	sobre tecla "TEC1" de la placa.
 */
 int PRESS(void)
 {
@@ -116,9 +109,6 @@ int PRESS(void)
 /**
 *	\fn int PRESS_4(void)
 *	\brief Si el usuario "realiza primer pasada sobre los 4 leds" se prende led R
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
 */
 int PRESS_4(void)
 {
@@ -140,9 +130,6 @@ int PRESS_4(void)
 /**
 *	\fn int PRESS_7(void)
 *	\brief Si el usuario "realiza segunda pasada sobre los 4 leds" se prende led B
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
 */
 int PRESS_7(void)
 {
@@ -164,9 +151,6 @@ int PRESS_7(void)
 /**
 *	\fn int PRESS_10(void)
 *	\brief Si el usuario "realiza tercer pasada sobre los 4 leds" se prende led G
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
 */
 int PRESS_10(void)
 {
@@ -190,10 +174,7 @@ int PRESS_10(void)
 
 /**
 *	\fn void LED_R(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Encendido de LEDR sobre la placa
 */
 void LED_R(void)
 {
@@ -208,10 +189,7 @@ void LED_R(void)
 
 /**
 *	\fn void LED1(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Encendido de LED1 sobre la placa
 */
 void P_LED_1(void)
 {
@@ -226,10 +204,7 @@ void P_LED_1(void)
 
 /**
 *	\fn void LED2(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Encendido de LED2 sobre la placa
 */
 void P_LED_2(void)
 {
@@ -244,10 +219,7 @@ void P_LED_2(void)
 
 /**
 *	\fn void LED3(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Encendido de LED3 sobre la placa
 */
 void P_LED_3(void)
 {
@@ -262,10 +234,7 @@ void P_LED_3(void)
 
 /**
 *	\fn void LED_G(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Encendido de LEDG sobre la placa
 */
 void LED_G(void)
 {
@@ -280,10 +249,7 @@ void LED_G(void)
 
 /**
 *	\fn void LED_B(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
+*	\brief Encendido de LEDB sobre la placa
 */
 void LED_B(void)
 {
@@ -300,9 +266,6 @@ void LED_B(void)
 /**
 *	\fn void BORROW(void)
 *	\brief Renueva contador
-*	\details Detalles
-*	\author FACUNDO
-*	\date 29-09-2016 20:56:05
 */
 void BORROW(void)
 {
