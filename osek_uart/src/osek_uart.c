@@ -68,7 +68,9 @@ ISR(UART2_IRQHandler)
 	byte=leerUART();
 	data=byte;
 	letra=byte;
-	enviar_lcd(letra);
+	//lcd_init();
+	//lcd_gotoxy(9,1);
+	lcd_putc(letra);
 	while ((Chip_UART_ReadLineStatus(LPC_USART2) & UART_LSR_THRE) == 0); /* Wait for space in FIFO */{
 		//data=byte;
 		Chip_UART_SendByte(LPC_USART2, byte);
@@ -85,7 +87,7 @@ TASK (Inicializar){
 	printf_lcd("Palabra:");
 	uartConfig(UART_USB,9600);
 	uartWriteString(UART_USB,"Palabra\n");
-	lcd_gotoxy(1,9);
+	//lcd_gotoxy(1,9);
 	EnableAllInterrupts();
 	ActivateTask(recepcion);
 	WaitEvent(palabra);
@@ -93,6 +95,9 @@ TASK (Inicializar){
 }
 
 TASK (recepcion){
+	//lcd_init();
+	lcd_gotoxy(1,1);
+	printf_lcd("Palabra:");
 	WaitEvent(palabra);
 	SetEvent(recepcion,palabra);
 	if(data=='L'){
