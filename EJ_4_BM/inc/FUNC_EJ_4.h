@@ -17,6 +17,6 @@ int MAYOR_4(void);
 int MENOR_4(void);
 
 //Prototipos de las acciones
-void DAC_3_3(void);
+void DAC_2(void);
 void APAGAR_DAC(void);
-void DAC_4(void);
+void DAC_3(void);

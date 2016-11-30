@@ -1,9 +1,9 @@
 /*==================[inclusions]=============================================*/
-#include "EJ_4_BM.h"       /* <= own header */
+#include "EJ__BM.h"       /* <= own header */
 
 #include "sAPI.h"
-#include "FUNC_EJ_4.h"
-
+#include "FUNC__BM.h"
+#include "dsp7seg.h"
 #ifndef CPU
 #error CPU shall be defined
 #endif
@@ -26,8 +26,7 @@
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
-/** \brief Main function
- /** \brief Funcion main
+/** \brief Funcion main
  *
  *	Esta funcion es el punto de entrada del software
  * \retorna 0
@@ -38,20 +37,32 @@
 
 int main(void)
 {
-   /* perform the needed initialization here */
+	/* Inicializar la placa */
 	boardConfig();
-	analogConfig( ENABLE_ANALOG_INPUTS );
-	analogConfig( ENABLE_ANALOG_OUTPUTS );
+	tickConfig( 1, 0 );  //necesario para utiizar delay de libreria sapi
+	/* Inicializar DigitalIO */
+	digitalConfig( 0, ENABLE_DIGITAL_IO);
+
+	/* Configuración de pines de entrada para
+	   Teclas de la CIAA-NXP */
+	digitalConfig( TEC1, INPUT );
+	digitalConfig( TEC2, INPUT );
+	digitalConfig( TEC3, INPUT );
+	digitalConfig( TEC4, INPUT );
+
+	/* Configuración de pines de salida para
+	   Leds de la CIAA-NXP */
 	digitalConfig( LEDR, OUTPUT );
 	digitalConfig( LEDG, OUTPUT );
 	digitalConfig( LEDB, OUTPUT );
 	digitalConfig( LED1, OUTPUT );
 	digitalConfig( LED2, OUTPUT );
 	digitalConfig( LED3, OUTPUT );
-   while(1) {
-		maquina_estado();			//invocacion a funcion maquina_estado
-   }
-   return 0;
+	inicializacion();
+	while(1) {
+		maquina_estado();		//invocacion a funcion maquina_estado
+	}
+	return 0;
 }
 
 /*==================[end of file]============================================*/

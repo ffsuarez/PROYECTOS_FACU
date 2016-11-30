@@ -5,7 +5,7 @@
 *	\		se establece una salida sobre el DAC igual a 3.3[V] o  4[V].
 */
 #include "sAPI.h"
-#include "dsp7seg.h"
+
 #include "FUNC_EJ_4.h" 
 
 //Implementacion Switch-Case
@@ -24,13 +24,13 @@ void maquina_estado()
 			
 				if(MAYOR_2())
 				{
-					DAC_3_3();
+					DAC_2();
 					estado = SALIDA_3_3;
 		
 				}
 				if(MAYOR_4())
 				{
-					DAC_4();
+					DAC_3();
 					estado = SALIDA_4;
 		
 				}
@@ -47,7 +47,7 @@ void maquina_estado()
 				}
 				if(MAYOR_4())
 				{
-					DAC_4();
+					DAC_3();
 					estado = SALIDA_4;
 		
 				}
@@ -64,7 +64,7 @@ void maquina_estado()
 				}
 				if(MENOR_4())
 				{
-					DAC_3_3();
+					DAC_2();
 					estado = SALIDA_3_3;
 		
 				}
@@ -123,16 +123,16 @@ int NINGUNO(void)
 		res=1;
 		return res;
 	};
-	if((medida>2.1)||(medida<3.9)){
-		res=1;
-		return res;
-	}
-	if(medida>4.1){
-		res=1;
-		return res;
-	}
+	//if((medida>2.3)&&(medida<3.9)){
+		//res=1;
+		//return res;
+	//}
+	//if(medida>4.3){
+		//res=1;
+		//return res;
+	//}
 	res=0;
-		return res;
+	return res;
 
 	//return res;
 
@@ -190,13 +190,13 @@ int MENOR_4(void)
 
 /**
 *	\fn void DAC_3_3(void)
-*	\brief Establece una salida sobre el DAC igual a 3.3[V]
+*	\brief Establece una salida sobre el DAC igual a 2[V]
 */
-void DAC_3_3(void)
+void DAC_2(void)
 {
 	uint16_t salida = 0;  // variable donde se almacena valor leido del ADC CH 1
 	//Codigo propio de la funcion
-	salida=670;
+	salida=621;
 	analogWrite( AO, salida );
 }
 
@@ -209,20 +209,20 @@ void APAGAR_DAC(void)
 	//Codigo propio de la funcion
 	uint16_t salida = 0;  // variable donde se almacena valor leido del ADC CH 1
 		//Codigo propio de la funcion
-		salida=819;
+		salida=0;
 		analogWrite( AO, salida );
 }
 
 /**
 *	\fn void DAC_4(void)
-*	\brief Establece una salida sobre el DAC igual a 4[V]
+*	\brief Establece una salida sobre el DAC igual a 3[V]
 */
-void DAC_4(void)
+void DAC_3(void)
 {
 	//Codigo propio de la funcion
 	uint16_t salida = 0;  // variable donde se almacena valor leido del ADC CH 1
 	//Codigo propio de la funcion
-	salida=819;
+	salida=931;
 	analogWrite( AO, salida );
 }
 
